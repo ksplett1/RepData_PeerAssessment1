@@ -19,9 +19,9 @@ Data Set Description:
 
 Variables:
 
-steps:    number of steps in a 5-minute interval (missing values are coded as NA) </br>
-date:     measurement date in YYYY-MM-DD format </br>
-interval: identifier for the 5-minute interval </br>
+steps:    number of steps in a 5-minute interval (missing values are coded as NA) <br />
+date:     measurement date in YYYY-MM-DD format <br />
+interval: identifier for the 5-minute interval <br />
 
 ```{r, echo=TRUE}
 
