@@ -33,7 +33,7 @@ library(ggplot2)
 
 
 ```r
-setwd("c:/Users/ksplett1/repData2/RepData_PeerAssessment1")
+# setwd("c:/Users/ksplett1/repData2/RepData_PeerAssessment1")
 stepdf <- read.csv(unz("data/repdata-data-activity.zip", "activity.csv" ),
         header = TRUE, sep = ",", na.strings = "NA",
         colClasses = c("numeric", "character", "numeric"),

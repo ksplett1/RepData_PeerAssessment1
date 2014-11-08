@@ -218,7 +218,7 @@ interval: identifier for the 5-minute interval <br /></p>
 
 <h3>Load and preprocess dataset</h3>
 
-<pre><code class="r">setwd(&quot;c:/Users/ksplett1/repData2/RepData_PeerAssessment1&quot;)
+<pre><code class="r"># setwd(&quot;c:/Users/ksplett1/repData2/RepData_PeerAssessment1&quot;)
 stepdf &lt;- read.csv(unz(&quot;data/repdata-data-activity.zip&quot;, &quot;activity.csv&quot; ),
         header = TRUE, sep = &quot;,&quot;, na.strings = &quot;NA&quot;,
         colClasses = c(&quot;numeric&quot;, &quot;character&quot;, &quot;numeric&quot;),
