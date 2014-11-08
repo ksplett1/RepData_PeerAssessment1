@@ -6,7 +6,6 @@ output:
     keep_md: true
 ---
 
-## Reproducible Research: Peer Assessment 1 ##
 
 <hr />
 Data Set:
@@ -27,13 +26,14 @@ interval: identifier for the 5-minute interval <br />
 ```{r, echo=TRUE}
 
 library(ggplot2)
+library(knitr)
 
 ```
 
 <hr />
 ### Load and preprocess dataset ###
 
-```{r, echo=TRUE}
+```{r Preprocess, echo=TRUE}
 # setwd("c:/Users/ksplett1/repData2/RepData_PeerAssessment1")
 stepdf <- read.csv(unz("data/repdata-data-activity.zip", "activity.csv" ),
         header = TRUE, sep = ",", na.strings = "NA",
@@ -53,13 +53,18 @@ stepdf_noMissing <- with(stepdf, stepdf[! is.na(Steps),])
 ### What is the mean total number of steps taken per day? ###
 <br />
 
-```{r, echo=TRUE}
-stepsByDay <- aggregate(Steps ~ IntervalDate, stepdf_noMissing, FUN = sum)
+```{r StepsPerDay, echo=TRUE}
+stepsByDay <- aggregate(Steps ~ IntervalDate, stepdf_noMissing, FUN = sum) 
 
-hist(stepsByDay$Steps, col="blue1", breaks = 20, 
-     main = "Daily Number of Steps",
-     xlab = "Step Count"
-     )
+# hist(stepsByDay$Steps, col="blue1", breaks = 20, 
+#     main = "Daily Number of Steps",
+#     xlab = "Step Count"
+#     )
+
+histsteps <-  ggplot(stepsByDay, aes(x=Steps/1000)) +
+  geom_histogram(fill="blue", binwidth = 1) + 
+  theme_bw()+scale_y_discrete() + xlab("Steps (thousands)") 
+print( histsteps )
 
 meanSteps <- as.integer(round(mean(stepsByDay$Steps)))
 medianSteps <- as.integer(round(median(stepsByDay$Steps)))
@@ -73,7 +78,7 @@ medianSteps <- as.integer(round(median(stepsByDay$Steps)))
 ### What is the average daily activity pattern? ###
 <br />
 
-```{r, echo=TRUE}
+```{r AvgDailyActivity, echo=TRUE}
 stepsByInterval <- aggregate(Steps ~ Interval, stepdf_noMissing, FUN = mean)
 
 ggplot(data=stepsByInterval, aes(x=Interval, y=Steps)) + 
@@ -91,7 +96,7 @@ maxInterval <- with(stepsByInterval,stepsByInterval[Steps == max(Steps),]$Interv
 ### Imputing missing values ###
 <br />
 
-```{r, echo=TRUE}
+```{r ImputeMissing, echo=TRUE}
 nbrIntMissingSteps <- nrow(stepdf) - nrow(stepdf_noMissing)
 
 # fill in NA step values with mean steps for that interval
@@ -101,7 +106,7 @@ stepdf_imputed[is.na(stepdf_imputed$Steps),]$Steps <-
       round(stepdf_imputed[is.na(stepdf_imputed$Steps),]$MeanSteps, digits = 2)
 stepsByDay2 <- aggregate(Steps ~ IntervalDate, stepdf_imputed, FUN = sum)
 
-hist(stepsByDay2$Steps, col="blue1", breaks = 20,
+hist(stepsByDay2$Steps, col="blue1", breaks = 25,
      main = "Daily Number of Steps ",
      xlab = "Step Count"
      )
@@ -133,7 +138,7 @@ These values only change very slightly from the initial values because the NA va
 ### Are there differences in activity patterns between weekdays and weekends? ###
 <br />
 
-```{r, echo=TRUE}
+```{r WeekDayvsWeekEnd, echo=TRUE}
 # convert IntervalDate to date type
 # create a factor for weekday and weekend days
 stepdf_imputed$dateInterval <- as.Date(stepdf_imputed$IntervalDate, "%Y-%m-%d")

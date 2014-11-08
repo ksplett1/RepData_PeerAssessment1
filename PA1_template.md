@@ -1,7 +1,6 @@
 # Reproducible Research: Peer Assessment 1
 ksplett1  
 
-## Reproducible Research: Peer Assessment 1 ##
 
 <hr />
 Data Set:
@@ -26,6 +25,14 @@ library(ggplot2)
 
 ```
 ## Warning: package 'ggplot2' was built under R version 3.1.1
+```
+
+```r
+library(knitr)
+```
+
+```
+## Warning: package 'knitr' was built under R version 3.1.1
 ```
 
 <hr />
@@ -53,15 +60,20 @@ stepdf_noMissing <- with(stepdf, stepdf[! is.na(Steps),])
 
 
 ```r
-stepsByDay <- aggregate(Steps ~ IntervalDate, stepdf_noMissing, FUN = sum)
+stepsByDay <- aggregate(Steps ~ IntervalDate, stepdf_noMissing, FUN = sum) 
 
-hist(stepsByDay$Steps, col="blue1", breaks = 20, 
-     main = "Daily Number of Steps",
-     xlab = "Step Count"
-     )
+# hist(stepsByDay$Steps, col="blue1", breaks = 20, 
+#     main = "Daily Number of Steps",
+#     xlab = "Step Count"
+#     )
+
+histsteps <-  ggplot(stepsByDay, aes(x=Steps/1000)) +
+  geom_histogram(fill="blue", binwidth = 1) + 
+  theme_bw()+scale_y_discrete() + xlab("Steps (thousands)") 
+print( histsteps )
 ```
 
-![plot of chunk unnamed-chunk-3](./PA1_template_files/figure-html/unnamed-chunk-3.png) 
+![plot of chunk StepsPerDay](./PA1_template_files/figure-html/StepsPerDay.png) 
 
 ```r
 meanSteps <- as.integer(round(mean(stepsByDay$Steps)))
@@ -85,7 +97,7 @@ ggplot(data=stepsByInterval, aes(x=Interval, y=Steps)) +
            ggtitle("Average Steps per 5 Minute Interval")
 ```
 
-![plot of chunk unnamed-chunk-4](./PA1_template_files/figure-html/unnamed-chunk-4.png) 
+![plot of chunk AvgDailyActivity](./PA1_template_files/figure-html/AvgDailyActivity.png) 
 
 ```r
 maxInterval <- with(stepsByInterval,stepsByInterval[Steps == max(Steps),]$Interval)
@@ -110,13 +122,13 @@ stepdf_imputed[is.na(stepdf_imputed$Steps),]$Steps <-
       round(stepdf_imputed[is.na(stepdf_imputed$Steps),]$MeanSteps, digits = 2)
 stepsByDay2 <- aggregate(Steps ~ IntervalDate, stepdf_imputed, FUN = sum)
 
-hist(stepsByDay2$Steps, col="blue1", breaks = 20,
+hist(stepsByDay2$Steps, col="blue1", breaks = 25,
      main = "Daily Number of Steps ",
      xlab = "Step Count"
      )
 ```
 
-![plot of chunk unnamed-chunk-5](./PA1_template_files/figure-html/unnamed-chunk-5.png) 
+![plot of chunk ImputeMissing](./PA1_template_files/figure-html/ImputeMissing.png) 
 
 ```r
 meanSteps2 <- as.integer(round(mean(stepsByDay2$Steps)))
@@ -166,6 +178,6 @@ plotdaytype <- plotdaytype  + facet_grid(TypeOfDay ~ .)
 plotdaytype
 ```
 
-![plot of chunk unnamed-chunk-6](./PA1_template_files/figure-html/unnamed-chunk-6.png) 
+![plot of chunk WeekDayvsWeekEnd](./PA1_template_files/figure-html/WeekDayvsWeekEnd.png) 
 
 There is higher level of activity during weekday mornings than weekend mornings. Weekend activity is more consistently spread over the late morning to early evening.
