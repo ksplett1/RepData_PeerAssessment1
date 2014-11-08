@@ -63,12 +63,12 @@ hist(stepsByDay$Steps, col="blue1", breaks = 20,
 ![plot of chunk unnamed-chunk-3](./PA1_template_files/figure-html/unnamed-chunk-3.png) 
 
 ```r
-meanSteps <- mean(stepsByDay$Steps)
-medianSteps <- median(stepsByDay$Steps)
+meanSteps <- as.integer(round(mean(stepsByDay$Steps)))
+medianSteps <- as.integer(round(median(stepsByDay$Steps)))
 ```
 
-1.0766 &times; 10<sup>4</sup> = Mean number of steps per day 
-1.0765 &times; 10<sup>4</sup> = Median number of steps per day
+10766 = Mean number of steps per day  <br />
+10765 = Median number of steps per day
 
 <br />
 <hr />
@@ -118,8 +118,8 @@ hist(stepsByDay2$Steps, col="blue1", breaks = 20,
 ![plot of chunk unnamed-chunk-5](./PA1_template_files/figure-html/unnamed-chunk-5.png) 
 
 ```r
-meanSteps2 <- mean(stepsByDay2$Steps)
-medianSteps2 <- median(stepsByDay2$Steps)
+meanSteps2 <- as.integer(round(mean(stepsByDay2$Steps)))
+medianSteps2 <- as.integer(round(median(stepsByDay2$Steps)))
 
 meanDiff <- meanSteps2 - meanSteps
 medianDiff <- medianSteps2 - medianSteps
@@ -128,11 +128,13 @@ medianDiff <- medianSteps2 - medianSteps
 2304 = Number of 5 Minute Intervals Missing Values
 
 After the interval mean is substituted for intervals with missing steps, the new mean and median are:
-1.0766 &times; 10<sup>4</sup> = Mean number of steps per day 
-1.0765 &times; 10<sup>4</sup> = Median number of steps per day
 
-The change in mean number of steps is barely detectable (-0.0077). 
-The median changed about one step (1.13).
+10766 = Mean number of steps per day  <br />
+10765 = Median number of steps per day
+
+The change in mean number of steps is barely detectable (0). <br />
+The median changed about one step (1).
+
 
 These values only change very slightly from the initial values because the NA values are replaced with the average number of steps for the interval. There is very little impact of imputing missing data on the estimates of the total daily number of steps.
 
