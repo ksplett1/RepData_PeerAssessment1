@@ -1,6 +1,7 @@
 # Reproducible Research: Peer Assessment 1
 ksplett1  
 
+## Reproducible Research: Peer Assessment 1 ##
 
 <hr />
 Data Set:
